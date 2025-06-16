@@ -81,6 +81,17 @@ public:
         return atom->id;
     }
     
+    unsigned addImplicationLink(unsigned antecedent_id, unsigned consequent_id, 
+                               double strength = 0.5, double confidence = 0.5) {
+        auto atom = std::make_shared<Atom>(next_atom_id++, Atom::IMPLICATION_LINK, "");
+        atom->outgoing.push_back(antecedent_id);
+        atom->outgoing.push_back(consequent_id);
+        atom->strength = strength;
+        atom->confidence = confidence;
+        atoms[atom->id] = atom;
+        return atom->id;
+    }
+    
     // Pattern matching utilities
     std::vector<unsigned> findAtomsOfType(Atom::Type type) const {
         std::vector<unsigned> result;
@@ -122,36 +133,63 @@ public:
         for (auto it = rr_hypergraph->nodes.begin(); it != rr_hypergraph->nodes.end(); ++it) {
             auto rr_node = it->second;
             
-            // Create concept node for RR node
-            std::string atom_name = rr_node->label + "_" + std::to_string(rr_node->id);
-            unsigned atom_id = atom_space->addConceptNode(atom_name, rr_node->salience, rr_node->affordance_realization);
-            
-            // Store mapping
-            rr_node_to_atom[rr_node->id] = atom_id;
-            atom_to_rr_node[atom_id] = rr_node->id;
-            
-            // Add type information
-            std::string type_name;
-            switch (rr_node->nodeType) {
-                case plingua::rr::RRNode::MEMBRANE: type_name = "membrane"; break;
-                case plingua::rr::RRNode::RULE: type_name = "rule"; break;
-                case plingua::rr::RRNode::OBJECT: type_name = "object"; break;
-                case plingua::rr::RRNode::ENVIRONMENT: type_name = "environment"; break;
+            // Check if atom already exists for this RR node
+            unsigned atom_id;
+            auto existing_mapping = rr_node_to_atom.find(rr_node->id);
+            if (existing_mapping != rr_node_to_atom.end()) {
+                // Update existing atom
+                atom_id = existing_mapping->second;
+                auto atom = atom_space->getAtom(atom_id);
+                if (atom) {
+                    atom->strength = rr_node->salience;
+                    atom->confidence = rr_node->affordance_realization;
+                }
+            } else {
+                // Create new concept node for RR node
+                std::string atom_name = rr_node->label + "_" + std::to_string(rr_node->id);
+                atom_id = atom_space->addConceptNode(atom_name, rr_node->salience, rr_node->affordance_realization);
+                
+                // Store mapping
+                rr_node_to_atom[rr_node->id] = atom_id;
+                atom_to_rr_node[atom_id] = rr_node->id;
+                
+                // Add type information
+                std::string type_name;
+                switch (rr_node->nodeType) {
+                    case plingua::rr::RRNode::MEMBRANE: type_name = "membrane"; break;
+                    case plingua::rr::RRNode::RULE: type_name = "rule"; break;
+                    case plingua::rr::RRNode::OBJECT: type_name = "object"; break;
+                    case plingua::rr::RRNode::ENVIRONMENT: type_name = "environment"; break;
+                }
+                
+                // Check if type atom already exists
+                auto existing_type_atoms = atom_space->findAtomsByName(type_name);
+                unsigned type_atom_id;
+                if (!existing_type_atoms.empty()) {
+                    type_atom_id = existing_type_atoms[0];
+                } else {
+                    type_atom_id = atom_space->addConceptNode(type_name);
+                }
+                atom_space->addInheritanceLink(atom_id, type_atom_id, 0.9, 0.9);
+                
+                // Add AAR type information
+                std::string aar_name;
+                switch (rr_node->aarType) {
+                    case plingua::rr::AARType::AGENT: aar_name = "agent"; break;
+                    case plingua::rr::AARType::ARENA: aar_name = "arena"; break;
+                    case plingua::rr::AARType::RELATION: aar_name = "relation"; break;
+                }
+                
+                // Check if AAR type atom already exists
+                auto existing_aar_atoms = atom_space->findAtomsByName(aar_name);
+                unsigned aar_atom_id;
+                if (!existing_aar_atoms.empty()) {
+                    aar_atom_id = existing_aar_atoms[0];
+                } else {
+                    aar_atom_id = atom_space->addConceptNode(aar_name);
+                }
+                atom_space->addInheritanceLink(atom_id, aar_atom_id, 0.9, 0.9);
             }
-            
-            unsigned type_atom_id = atom_space->addConceptNode(type_name);
-            atom_space->addInheritanceLink(atom_id, type_atom_id, 0.9, 0.9);
-            
-            // Add AAR type information
-            std::string aar_name;
-            switch (rr_node->aarType) {
-                case plingua::rr::AARType::AGENT: aar_name = "agent"; break;
-                case plingua::rr::AARType::ARENA: aar_name = "arena"; break;
-                case plingua::rr::AARType::RELATION: aar_name = "relation"; break;
-            }
-            
-            unsigned aar_atom_id = atom_space->addConceptNode(aar_name);
-            atom_space->addInheritanceLink(atom_id, aar_atom_id, 0.9, 0.9);
         }
     }
     
