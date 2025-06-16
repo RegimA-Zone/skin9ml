@@ -31,6 +31,16 @@ enum class AARType {
     RELATION
 };
 
+// Structure for tracking emergent patterns
+struct EmergentCluster {
+    unsigned agent_id;
+    std::vector<unsigned> arena_ids;
+    std::vector<double> coupling_strengths;
+    double coherence;
+    
+    EmergentCluster() : agent_id(0), coherence(0.0) {}
+};
+
 // RR Node representing membranes, rules, or objects in the hypergraph
 class RRNode {
 public:
@@ -69,13 +79,37 @@ public:
     // Update salience based on RR dynamics
     void updateSalience(double delta_time) {
         // Implement trialectic co-constitution: ∀^ω(x ⇔^α y ⇔^α z ⇔^α x)
-        for (size_t i = 0; i < trialectic_state.size(); ++i) {
-            size_t next = (i + 1) % trialectic_state.size();
-            trialectic_state[i] += delta_time * salience * trialectic_state[next];
+        if (trialectic_state.size() >= 3) {
+            std::vector<double> new_state = trialectic_state;
+            for (size_t i = 0; i < trialectic_state.size(); ++i) {
+                size_t prev = (i + trialectic_state.size() - 1) % trialectic_state.size();
+                size_t next = (i + 1) % trialectic_state.size();
+                
+                // Enhanced trialectic dynamics with bidirectional coupling
+                double coupling_strength = salience * delta_time;
+                new_state[i] += coupling_strength * (trialectic_state[next] - trialectic_state[prev]) / 2.0;
+                new_state[i] = std::tanh(new_state[i]); // Keep bounded
+            }
+            trialectic_state = new_state;
         }
         
-        // Update salience based on affordance realization
-        salience = std::tanh(salience + delta_time * computeRelevanceGradient());
+        // Update salience based on affordance realization and trialectic coherence
+        double trialectic_coherence = computeTrialecticCoherence();
+        double relevance_gradient = computeRelevanceGradient();
+        salience = std::tanh(salience + delta_time * (relevance_gradient + 0.3 * trialectic_coherence));
+    }
+    
+    // Compute trialectic coherence measure
+    double computeTrialecticCoherence() const {
+        if (trialectic_state.size() < 3) return 0.0;
+        
+        double coherence = 0.0;
+        for (size_t i = 0; i < trialectic_state.size(); ++i) {
+            size_t next = (i + 1) % trialectic_state.size();
+            // Measure coherence as correlation between adjacent states
+            coherence += trialectic_state[i] * trialectic_state[next];
+        }
+        return coherence / trialectic_state.size();
     }
 };
 
@@ -183,31 +217,68 @@ public:
     
     // Monitor for emergent agent-arena-relations
     void detectEmergentPatterns() {
-        // Simple emergence detection: look for high-salience, high-affordance clusters
+        // Enhanced emergence detection with multiple criteria
+        std::vector<EmergentCluster> clusters;
+        
+        // 1. Detect high-relevance clusters
         for (auto agent_id : agent_nodes) {
             if (!nodes.count(agent_id)) continue;
             auto agent = nodes[agent_id];
             
             if (agent->salience > 0.8 && agent->affordance_realization > 0.7) {
-                // High relevance agent detected - check for arena coupling
+                EmergentCluster cluster;
+                cluster.agent_id = agent_id;
+                cluster.coherence = agent->computeTrialecticCoherence();
+                
+                // Check for arena coupling
                 for (auto arena_id : arena_nodes) {
                     if (!nodes.count(arena_id)) continue;
                     auto arena = nodes[arena_id];
                     
-                    // Look for strong relation between agent and arena
-                    for (auto edge_it = edges.begin(); edge_it != edges.end(); ++edge_it) {
-                        auto edge = edge_it->second;
-                        if ((edge->from_node == agent_id && edge->to_node == arena_id) ||
-                            (edge->from_node == arena_id && edge->to_node == agent_id)) {
-                            if (edge->strength > 0.8) {
-                                // Emergent agent-arena coupling detected
-                                createEmergentRelation(agent_id, arena_id, edge_it->first);
-                            }
-                        }
+                    double coupling_strength = computeCouplingStrength(agent_id, arena_id);
+                    if (coupling_strength > 0.8) {
+                        cluster.arena_ids.push_back(arena_id);
+                        cluster.coupling_strengths.push_back(coupling_strength);
                     }
+                }
+                
+                if (!cluster.arena_ids.empty()) {
+                    clusters.push_back(cluster);
                 }
             }
         }
+        
+        // 2. Create emergent relations for strong clusters
+        for (const auto& cluster : clusters) {
+            if (cluster.coherence > 0.6 && cluster.coupling_strengths.size() > 0) {
+                double avg_coupling = 0.0;
+                for (double strength : cluster.coupling_strengths) {
+                    avg_coupling += strength;
+                }
+                avg_coupling /= cluster.coupling_strengths.size();
+                
+                if (avg_coupling > 0.75) {
+                    createEmergentRelation(cluster.agent_id, cluster.arena_ids[0], 0);
+                }
+            }
+        }
+    }
+    
+    // Compute coupling strength between agent and arena
+    double computeCouplingStrength(unsigned agent_id, unsigned arena_id) const {
+        double total_strength = 0.0;
+        int edge_count = 0;
+        
+        for (auto edge_it = edges.begin(); edge_it != edges.end(); ++edge_it) {
+            auto edge = edge_it->second;
+            if ((edge->from_node == agent_id && edge->to_node == arena_id) ||
+                (edge->from_node == arena_id && edge->to_node == agent_id)) {
+                total_strength += edge->strength;
+                ++edge_count;
+            }
+        }
+        
+        return edge_count > 0 ? total_strength / edge_count : 0.0;
     }
     
 private:
