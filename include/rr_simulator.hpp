@@ -3,6 +3,8 @@
 
 #include <simulator/simulator.hpp>
 #include <relevance_realization.hpp>
+#include <atomspace_integration.hpp>
+#include <memory>
 
 namespace plingua { namespace rr {
 
@@ -32,12 +34,22 @@ public:
         
         // Create test relations
         hypergraph->addRelationEdge(agent_node, arena_node, RREdge::CO_CONSTRUCTION, 0.7);
+        
+        // Initialize AtomSpace integration
+        initializeAtomSpaceIntegration();
     }
     
     // Run RR dynamics step
     void stepRRDynamics() {
         if (hypergraph && rr_enabled) {
             hypergraph->updateRelevanceRealization(time_step);
+            
+            // Update AtomSpace representation periodically
+            static int step_count = 0;
+            step_count++;
+            if (step_count % 10 == 0) { // Update every 10 steps
+                performAtomSpaceIntegration();
+            }
         }
     }
     
@@ -69,7 +81,7 @@ public:
         
         if (!hypergraph) return patterns;
         
-        // Look for high-relevance clusters
+        // Look for high-relevance clusters in RR hypergraph
         for (auto it = hypergraph->nodes.begin(); it != hypergraph->nodes.end(); ++it) {
             auto node = it->second;
             if (node->salience > 0.8 && node->affordance_realization > 0.7) {
@@ -79,13 +91,41 @@ public:
             }
         }
         
+        // Add AtomSpace patterns if integration is available
+        if (atomspace_integrator) {
+            auto as_patterns = atomspace_integrator->findEmergentPatterns();
+            patterns.insert(patterns.end(), as_patterns.begin(), as_patterns.end());
+        }
+        
         return patterns;
+    }
+
+    // AtomSpace integration methods
+    void initializeAtomSpaceIntegration() {
+        if (!hypergraph) return;
+        
+        atomspace.reset(new plingua::atomspace::AtomSpace());
+        atomspace_integrator.reset(new plingua::atomspace::RRAtomSpaceIntegrator(hypergraph, atomspace.get()));
+    }
+    
+    void performAtomSpaceIntegration() {
+        if (atomspace_integrator) {
+            atomspace_integrator->performIntegration();
+        }
+    }
+    
+    const plingua::atomspace::AtomSpace* getAtomSpace() const {
+        return atomspace.get();
     }
 
 private:
     RRHypergraph* hypergraph;
     double time_step;
     bool rr_enabled;
+    
+    // AtomSpace integration
+    std::shared_ptr<plingua::atomspace::AtomSpace> atomspace;
+    std::shared_ptr<plingua::atomspace::RRAtomSpaceIntegrator> atomspace_integrator;
     
     // Mappings between P-system and RR components
     std::map<unsigned, unsigned> membrane_to_node;  // membrane_id -> node_id
