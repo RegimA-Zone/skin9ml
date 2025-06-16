@@ -111,7 +111,7 @@ using namespace plingua::parser;
 					theta_system lambda_membrane affordance_spec agent_arena_spec
 					emergence_spec constraint_spec execution_mode_spec
 					relevance_computation triadic_content triadic_element
-					mathematical_space rr_definition rr_model constraint_type
+					mathematical_space rr_definition constraint_type
 
 			
 %start plingua
@@ -185,6 +185,7 @@ include : INCLUDE STRING {$$ = new Node(INCLUDE,$2); $$->setLoc(@1,@2);}
 		;
 
 id : ID {$$ = new Node(ID,$1); $$->setLoc(@1);} 
+   | RELEVANCE_REALIZATION {$$ = new Node(ID,strdup("relevance_realization")); $$->setLoc(@1);}
    ;
       
 variable : id {$$ = new Node(VARIABLE,$1); $$->setLoc($1);}
@@ -574,8 +575,7 @@ expr0 : non_negative_long 		      {$$ = $1;}
 
 /* Relevance Realization Extensions */
 
-rr_definition : rr_model SEPARATOR              {$$ = $1;}
-              | theta_system SEPARATOR          {$$ = $1;}
+rr_definition : theta_system SEPARATOR          {$$ = $1;}
               | affordance_spec SEPARATOR       {$$ = $1;}
               | agent_arena_spec SEPARATOR      {$$ = $1;}
               | emergence_spec SEPARATOR        {$$ = $1;}
@@ -583,10 +583,6 @@ rr_definition : rr_model SEPARATOR              {$$ = $1;}
               | execution_mode_spec SEPARATOR   {$$ = $1;}
               | relevance_computation SEPARATOR {$$ = $1;}
               ;
-
-rr_model : MODEL LESS_THAN RELEVANCE_REALIZATION GREATER_THAN 
-         {$$ = new Node(MODEL, new Node(ID, (char*)"relevance_realization")); $$->setLoc(@1,@4);}
-         ;
 
 theta_system : THETA_SYSTEM id LBRACE
                affordance_spec

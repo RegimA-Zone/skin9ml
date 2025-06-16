@@ -1,0 +1,8 @@
+@include "relevance_realization_model.pli"
+@model<relevance_realization>
+
+def main()
+{
+    @mu = [ ]'1;
+    @ms(1) = a;
+}
