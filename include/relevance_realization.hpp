@@ -8,6 +8,7 @@
 #include <memory>
 #include <functional>
 #include <cmath>
+#include <cstdlib>
 #include "serialization.hpp"
 
 namespace plingua { namespace rr {
@@ -67,13 +68,21 @@ public:
     
     RRNode(unsigned nodeId, Type type, AARType aar, const std::string& nodeLabel) 
         : id(nodeId), nodeType(type), aarType(aar), label(nodeLabel),
-          salience(0.5), affordance_potential(1.0), affordance_realization(0.0),
-          original_membrane_id(0), original_rule_id(0), trialectic_state(3, 0.0) {}
+          salience(0.5), affordance_potential(1.0), affordance_realization(0.3),
+          original_membrane_id(0), original_rule_id(0), trialectic_state(3, 0.1) {
+        // Initialize trialectic state with small random values
+        for (size_t i = 0; i < trialectic_state.size(); ++i) {
+            trialectic_state[i] = 0.1 * (double(rand()) / RAND_MAX - 0.5);
+        }
+    }
           
     // Compute relevance gradient: ∇ℜ = lim_{t→∞} Σᵢ log(affordance_realizationᵢ(t)/affordance_potentialᵢ(t))
     double computeRelevanceGradient() const {
         if (affordance_potential <= 0) return 0.0;
-        return std::log(affordance_realization / affordance_potential);
+        // Use a small epsilon to prevent log(0) issues
+        double epsilon = 1e-6;
+        double ratio = std::max(epsilon, affordance_realization) / affordance_potential;
+        return std::log(ratio);
     }
     
     // Update salience based on RR dynamics
