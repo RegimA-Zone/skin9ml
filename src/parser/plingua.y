@@ -62,7 +62,23 @@ using namespace plingua::parser;
        INT_TYPE LONG_TYPE DOUBLE_TYPE STRING_TYPE SYSTEM_CONSTANT
        MODEL_DEFINITION MODEL_BODY MODEL_ELEMENT SYSTEM_CALL
        INNER_MEMBRANE INNER_MEMBRANES OUTER_MEMBRANE OUTER_MEMBRANES
-       RIGHT_HAND_RULE LEFT_HAND_RULE 
+       RIGHT_HAND_RULE LEFT_HAND_RULE
+       THETA_SYSTEM LAMBDA_MEMBRANE AFFORDANCES AGENT_ARENA
+       EMERGENCE CONSTRAINTS EXECUTION_MODE COMPUTE_RELEVANCE
+       TENSOR_PRODUCT BIDIRECTIONAL EQUIVALENT FORALL EXISTS
+       NABLA DIRECT_SUM SUBSET ISOMORPHIC NOT_EXISTS BECAUSE
+       LOGICAL_AND LOGICAL_OR IMPLIES COMPOSITION UNION POWERSET
+       DOUBLE_LBRACKET DOUBLE_RBRACKET ELEMENT_OF CARTESIAN_PRODUCT
+       OMEGA ALPHA GAMMA PHI MU_GREEK SIGMA TAU PI FINAL_SIGMA
+       EPSILON DELTA KAPPA THETA ZETA ETA LAMBDA_CAPITAL THETA_CAPITAL
+       OMEGA_CAPITAL PSI_CAPITAL XI_CAPITAL PI_CAPITAL SIGMA_CAPITAL
+       PHI_CAPITAL REALS COMPLEX QUATERNIONS NATURALS INTEGERS ALEPH
+       CO_CONST AUTO_TARGET ANTIC_TARGET ADAPT_TARGET EMERGE_TARGET
+       HERE_TARGET OUT_TARGET IN_TARGET RELEVANCE_REALIZATION
+       MAX_PARALLEL_TRIALECTIC AUTOPOIESIS ANTICIPATION ADAPTATION
+       WHEN CONSTRAINT_COHERENCE THRESHOLD DISSOLVE PARENT
+       DEGREES_FREEDOM TEMPORAL_COHERENCE AGENT_ARENA_COUPLING
+       STABLE GRIP REALITY FREEDOM_UNITS 
        
        
       
@@ -92,6 +108,10 @@ using namespace plingua::parser;
 					inner_membrane inner_membranes left_outer_membrane type
 					right_outer_membranes right_outer_membrane lsquare0 charge0
 					right_hand_rule left_hand_rule extendMembraneStructure
+					theta_system lambda_membrane affordance_spec agent_arena_spec
+					emergence_spec constraint_spec execution_mode_spec
+					relevance_computation triadic_content triadic_element
+					mathematical_space rr_definition constraint_type
 
 			
 %start plingua
@@ -107,6 +127,7 @@ definitions : definitions definition {$$ = $1->addChild($2); $$->setLoc($1,$2);}
 definition : include              			           {$$ = $1;}
 		   | model	              			           {$$ = $1;}
 		   | model_definition     			           {$$ = $1;}
+		   | rr_definition        			           {$$ = $1;}
 		   | pattern              			           {$$ = $1;}
 		   | module	             			           {$$ = $1;}
 		   | AT_SYMBOL features SEPARATOR              {$$ = $2;}
@@ -164,6 +185,7 @@ include : INCLUDE STRING {$$ = new Node(INCLUDE,$2); $$->setLoc(@1,@2);}
 		;
 
 id : ID {$$ = new Node(ID,$1); $$->setLoc(@1);} 
+   | RELEVANCE_REALIZATION {$$ = new Node(ID,strdup("relevance_realization")); $$->setLoc(@1);}
    ;
       
 variable : id {$$ = new Node(VARIABLE,$1); $$->setLoc($1);}
@@ -551,6 +573,94 @@ expr0 : non_negative_long 		      {$$ = $1;}
       | LPAR expr RPAR                {$$ = $2; $$->setLoc(@1,@3);}			
       ;                
 
+/* Relevance Realization Extensions */
+
+rr_definition : theta_system SEPARATOR          {$$ = $1;}
+              | affordance_spec SEPARATOR       {$$ = $1;}
+              | agent_arena_spec SEPARATOR      {$$ = $1;}
+              | emergence_spec SEPARATOR        {$$ = $1;}
+              | constraint_spec SEPARATOR       {$$ = $1;}
+              | execution_mode_spec SEPARATOR   {$$ = $1;}
+              | relevance_computation SEPARATOR {$$ = $1;}
+              ;
+
+theta_system : THETA_SYSTEM id LBRACE
+               affordance_spec
+               agent_arena_spec
+               RBRACE
+             {$$ = new Node(THETA_SYSTEM, $2, $4, $5); $$->setLoc(@1,@6);}
+             ;
+
+affordance_spec : AFFORDANCES ASIG LBRACE triadic_content RBRACE
+                {$$ = new Node(AFFORDANCES, $4); $$->setLoc(@1,@5);}
+                ;
+
+triadic_content : triadic_content COMMA triadic_element
+                {$$ = $1->addChild($3); $$->setLoc($1,$3);}
+                | triadic_element
+                {$$ = new Node(LABEL, $1); $$->setLoc($1);}
+                ;
+
+triadic_element : id TENSOR_PRODUCT id TENSOR_PRODUCT id
+                {$$ = new Node(TENSOR_PRODUCT, $1, $3, $5); $$->setLoc($1,$5);}
+                | LPAR id COMMA id COMMA id RPAR
+                {$$ = new Node(LABEL, $2, $4, $6); $$->setLoc(@1,@7);}
+                ;
+
+agent_arena_spec : AGENT_ARENA id LBRACE
+                   lambda_membrane
+                   RBRACE
+                 {$$ = new Node(AGENT_ARENA, $2, $4); $$->setLoc(@1,@5);}
+                 ;
+
+lambda_membrane : LAMBDA_MEMBRANE LSQUARE expr RSQUARE id LBRACE
+                  triadic_content
+                  rule
+                  RBRACE
+                {$$ = new Node(LAMBDA_MEMBRANE, $3, $5, $7, $8); $$->setLoc(@1,@9);}
+                ;
+
+emergence_spec : EMERGENCE id COLON mathematical_space arrow mathematical_space LBRACE
+                 WHEN id GREATER_THAN id COLON
+                 id LPAR mathematical_space RPAR arrow id LPAR mathematical_space RPAR SEPARATOR
+                 RBRACE
+               {$$ = new Node(EMERGENCE, $2, $4, $6); 
+                $$->addChild($9)->addChild($11)->addChild($13)->addChild($15)->addChild($18); 
+                $$->setLoc(@1,@21);}
+               ;
+
+constraint_spec : CONSTRAINTS LBRACE
+                  constraint_type
+                  RBRACE
+                {$$ = new Node(CONSTRAINTS, $3); $$->setLoc(@1,@4);}
+                ;
+
+constraint_type : constraint_type SEPARATOR constraint_type
+                {$$ = $1->addChild($3); $$->setLoc($1,$3);}
+                | id COLON expr
+                {$$ = new Node(LABEL, $1, $3); $$->setLoc($1,$3);}
+                ;
+
+execution_mode_spec : EXECUTION_MODE MAX_PARALLEL_TRIALECTIC LBRACE
+                      FORALL LPAR id COMMA id COMMA id RPAR ELEMENT_OF id COLON
+                      id LPAR id COMMA id COMMA id RPAR SEPARATOR
+                      RBRACE
+                    {$$ = new Node(EXECUTION_MODE, new Node(MAX_PARALLEL_TRIALECTIC)); $$->setLoc(@1,@19);}
+                    ;
+
+relevance_computation : COMPUTE_RELEVANCE LBRACE
+                        NABLA id ASIG expr SEPARATOR
+                        RBRACE
+                      {$$ = new Node(COMPUTE_RELEVANCE, $4, $6); $$->setLoc(@1,@8);}
+                      ;
+
+mathematical_space : LAMBDA_CAPITAL expr
+                   {$$ = new Node(LAMBDA_CAPITAL, $2); $$->setLoc(@1,$2);}
+                   | THETA_CAPITAL expr
+                   {$$ = new Node(THETA_CAPITAL, $2); $$->setLoc(@1,$2);}
+                   | id
+                   {$$ = $1;}
+                   ;
 
 			 
 %%

@@ -1,0 +1,11 @@
+@include "relevance_realization_model.pli"
+@model<relevance_realization>
+
+def main()
+{
+    @mu = [ ]'1;
+    @ms(1) = a, b, c;
+    
+    /* Test some basic RR constructs */
+    test_tensor = 5;
+}

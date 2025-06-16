@@ -1,0 +1,11 @@
+@include "relevance_realization_model.pli"
+@model<relevance_realization>
+
+/* Test simple RR directives */
+@affordances = {a1, a2, a3};
+
+def main()
+{
+    @mu = [ ]'1;
+    @ms(1) = a, b, c;
+}
