@@ -1,0 +1,41 @@
+@model<relevance_realization>
+
+@Θ-system autopoiesis_basic {
+    
+    /* Define trialectic alphabet as affordance space */
+    @affordances = {(α1, α2, α3), (γ1, γ2), (φ1, φ2, φ3)};
+    
+    /* Agent-Arena boundary definition */
+    @agent_arena main {
+        
+        /* Level 1: Autopoietic membrane */
+        @lambda[1] 'autopoiesis {
+            (μ_bio, σ_mil, τ_trans);  /* Initial triad */
+            
+            /* Autopoietic co-constitution rule */
+            [μ,σ,τ --> μ',σ',τ']'autopoiesis;
+        }
+    }
+    
+    /* Emergence operator for level transcendence */
+    @emergence δ : Λ¹ --> Λ² {
+        when constraint_coherence > threshold:
+            dissolve(Λ¹) --> parent(Λ²);
+    }
+    
+    /* Constraint catalog specification */
+    @constraints {
+        κ_metab : df(μ,σ,τ) < 3;
+    }
+}
+
+/* Execution semantics with parallel trialectic evolution */
+@execution_mode max_parallel_trialectic {
+    ∀ (x,y,z) ∈ active_triads:
+        apply_all_applicable_rules(x,y,z);
+}
+
+/* Relevance gradient computation */
+@compute_relevance {
+    ∇ℜ = lim_t(affordance_realization);
+}

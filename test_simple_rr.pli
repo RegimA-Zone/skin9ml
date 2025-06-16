@@ -1,0 +1,7 @@
+@model<relevance_realization>
+
+def main()
+{
+    /* Simple test */
+    @ms(1) = a;
+}
