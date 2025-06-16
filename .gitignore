@@ -30,6 +30,9 @@
 *.exe
 *.out
 *.app
+test_rr_enhanced
+test_next_directions
+demo_repl
 
 # Directories
 bin
