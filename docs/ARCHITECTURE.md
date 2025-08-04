@@ -1,39 +1,71 @@
-# P-Lingua Architecture Documentation
+# RR-Enhanced P-Lingua Architecture Documentation
 
 ## Overview
 
-P-Lingua is a comprehensive framework for membrane computing that provides a complete ecosystem for defining, parsing, simulating, and generating code for P-systems (membrane systems). This documentation provides detailed architectural insights with visual diagrams to facilitate understanding and contribution.
+**RR-PLingua** is a revolutionary enhancement of the traditional P-Lingua framework that integrates **Relevance Realization (RR)** dynamics with **OpenCog AtomSpace** symbolic reasoning. This creates a sophisticated platform for cognitive membrane computing that bridges symbolic and subsymbolic processing.
+
+The enhanced system provides four major architectural innovations:
+1. **PLN Integration** - Probabilistic Logic Networks for uncertain reasoning
+2. **Scheme Interface** - Interactive exploration and manipulation
+3. **Persistent Storage** - Knowledge accumulation and memory consolidation  
+4. **Multi-Level Integration** - Hierarchical emergence detection
 
 ## High-Level System Architecture
 
 ```mermaid
 graph TD
-    A[P-Lingua Source Files] --> B[Lexical Analyzer]
-    B --> C[Parser]
-    C --> D[Syntax Tree]
-    D --> E[Semantic Analyzer]
-    E --> F[P-System Model]
-    F --> G[Simulator Engine]
-    F --> H[Code Generator]
-    G --> I[Configuration Output]
-    H --> J[C++ Generated Code]
-    
-    subgraph "Core Components"
-        K[Parser Module]
-        L[Simulator Module] 
-        M[Generator Module]
-        N[Serialization Module]
+    subgraph "Traditional P-Lingua Layer"
+        A[P-Lingua Source Files] --> B[Lexical Analyzer]
+        B --> C[Parser]
+        C --> D[Syntax Tree]
+        D --> E[Semantic Analyzer]
+        E --> F[P-System Model]
+        F --> G[Simulator Engine]
+        F --> H[Code Generator]
+        G --> I[Configuration Output]
+        H --> J[C++ Generated Code]
     end
     
-    C --> K
-    G --> L
-    H --> M
-    F --> N
+    subgraph "RR Enhancement Layer"
+        K[RR Hypergraph]
+        L[Trialectic Dynamics]
+        M[Agent-Arena-Relation]
+        N[Relevance Gradients]
+    end
     
-    style A fill:#e1f5fe
-    style F fill:#f3e5f5
-    style I fill:#e8f5e8
-    style J fill:#fff3e0
+    subgraph "AtomSpace Integration Layer"
+        O[OpenCog AtomSpace]
+        P[PLN Inference Engine]
+        Q[Truth Value Management]
+        R[Pattern Recognition]
+    end
+    
+    subgraph "Interactive & Persistence Layer"
+        S[Scheme REPL Interface]
+        T[JSON Serialization]
+        U[Memory Consolidation]
+        V[Multi-Level Coordination]
+    end
+    
+    F --> K
+    K --> L
+    L --> M
+    M --> N
+    
+    K --> O
+    O --> P
+    P --> Q
+    Q --> R
+    
+    O --> S
+    O --> T
+    T --> U
+    K --> V
+    
+    style K fill:#e3f2fd
+    style O fill:#f3e5f5
+    style S fill:#e8f5e8
+    style V fill:#fff3e0
 ```
 
 ## Core Data Structures
