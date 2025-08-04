@@ -1,8 +1,8 @@
-# P-Lingua Documentation Index
+# RR-PLingua Documentation Index
 
-## Welcome to P-Lingua Architecture Documentation
+## Welcome to RR-PLingua Architecture Documentation
 
-This comprehensive documentation suite provides detailed insights into the P-Lingua framework for membrane computing, featuring architectural diagrams, component analysis, and practical examples.
+This comprehensive documentation suite provides detailed insights into the **RR-PLingua** framework for enhanced membrane computing with **Relevance Realization (RR)** and **OpenCog AtomSpace** integration, featuring architectural diagrams, component analysis, and practical examples of cognitive membrane computing.
 
 ## Documentation Structure
 
@@ -12,6 +12,7 @@ graph TD
     A --> C[Component Deep Dive]
     A --> D[Usage Examples]
     A --> E[API Reference]
+    A --> RR[RR-RNN Integration]
     
     B --> F[System Architecture]
     B --> G[Data Flow Diagrams]
@@ -22,54 +23,86 @@ graph TD
     C --> K[Code Generator]
     C --> L[Serialization System]
     
+    RR --> PLN[PLN Integration]
+    RR --> SCHEME[Scheme Interface]
+    RR --> PERSIST[Persistent Storage]
+    RR --> MULTI[Multi-Level Systems]
+    
     D --> M[Basic Examples]
     D --> N[Advanced Patterns]
     D --> O[Integration Guides]
     D --> P[Performance Analysis]
+    D --> RRE[RR-Enhanced Examples]
     
     E --> Q[Parser API]
     E --> R[Simulator API]
     E --> S[Generator API]
     E --> T[Utility Functions]
+    E --> U[RR-AtomSpace API]
     
     style A fill:#e3f2fd
     style B fill:#f1f8e9
     style C fill:#fff3e0
     style D fill:#e8f5e8
     style E fill:#f3e5f5
+    style RR fill:#ffebee
 ```
 
 ## Quick Navigation
 
 ### 📐 [Architecture Overview](ARCHITECTURE.md)
-Comprehensive system-level view of P-Lingua's design patterns and architectural decisions.
+Comprehensive system-level view of RR-enhanced P-Lingua's design patterns and architectural decisions.
 
 **Key Diagrams:**
-- High-level system architecture
-- Core data structures
-- Module interaction patterns
-- Data flow and execution models
-- Memory management strategies
+- High-level RR-enhanced system architecture
+- Core RR data structures and AtomSpace integration
+- Module interaction patterns with cognitive components
+- Data flow and execution models for RR dynamics
+- Memory management strategies for persistent storage
 
 ### 🔧 [Component Deep Dive](COMPONENTS.md)
-Detailed analysis of individual components and their internal architectures.
+Detailed analysis of individual components and their internal architectures, including RR enhancements.
 
 **Covered Components:**
-- Parser component with lexical/semantic analysis
-- Simulator engine with rule selection algorithms
-- Code generator with template systems
-- Serialization framework with binary formats
+- Traditional P-Lingua: Parser, Simulator, Generator, Serialization
+- RR Hypergraph: Trialectic dynamics and relevance realization
+- AtomSpace Integration: Symbolic-subsymbolic bridge
+- PLN Engine: Probabilistic logic networks and inference
+- Scheme Interface: Interactive exploration and manipulation
+- Persistent Storage: Memory consolidation and incremental learning
 - Inter-component communication patterns
 
-### 💡 [Usage Examples](EXAMPLES.md)
-Practical demonstrations of P-Lingua features through working examples.
+### 🧠 [RR-RNN Architecture](RR_ARCHITECTURE.md)
+Comprehensive documentation of the Relevance Realization with Recursive Neural Networks enhancement.
+
+**RR-RNN Features:**
+- Trialectic co-constitution framework
+- Agent-Arena-Relation dynamics
+- PLN truth value systems and inference rules
+- Multi-level integration and emergence detection
+- Performance characteristics and computational complexity
+
+### 🔄 [RR Process Flows](RR_PROCESS_FLOWS.md)
+Detailed PlantUML diagrams showing RR-RNN system process flows.
+
+**Process Diagrams:**
+- Overall system process flow
+- RR trialectic dynamics process
+- PLN inference cycles
+- Scheme interface command processing
+- Persistent storage and memory consolidation
+- Multi-level emergence detection
+
+### 💡 [Usage Examples](RR_EXAMPLES.md)
+Practical demonstrations of RR-enhanced P-Lingua features through working examples.
 
 **Example Categories:**
-- Basic membrane systems
-- Complex division patterns
-- Pattern matching with variables
-- Multi-environment communication
-- Error handling scenarios
+- Basic RR-enhanced membrane systems
+- Advanced PLN integration patterns
+- Interactive Scheme interface usage
+- Persistent storage and memory consolidation
+- Multi-level integration with hierarchical structures
+- Complete RR-RNN system demonstrations
 
 ## Architecture Highlights
 
@@ -125,6 +158,30 @@ graph LR
 - Version compatibility
 - Cross-platform support
 - Incremental loading
+
+#### 5. **RR Dynamics Pattern**
+- Trialectic co-constitution (∀^ω(x ⇔^α y ⇔^α z ⇔^α x))
+- Agent-arena-relation dynamics
+- Relevance gradient computation (∇ℜ = lim_{t→∞} Σᵢ log(aᵣᵢ(t)/aₚᵢ(t)))
+- Emergent pattern detection
+
+#### 6. **AtomSpace Integration Pattern**
+- RR-to-Atom conversion bridge
+- Truth value synchronization
+- PLN inference integration
+- Pattern matching and emergence detection
+
+#### 7. **Scheme Interface Pattern**
+- REPL command processing
+- Interactive system exploration
+- Real-time state manipulation
+- Lisp-style expression evaluation
+
+#### 8. **Persistent Storage Pattern**
+- JSON serialization framework
+- Memory consolidation algorithms
+- Incremental learning mechanisms
+- Cross-session knowledge persistence
 
 ## Component Interaction Map
 

@@ -1,6 +1,10 @@
-# P-Lingua Component Deep Dive
+# RR-Enhanced P-Lingua Component Deep Dive
 
-## Parser Component Architecture
+This document provides detailed analysis of both traditional P-Lingua components and the new RR-enhanced cognitive architecture components.
+
+## Traditional P-Lingua Components
+
+### Parser Component Architecture
 
 The parser component is the heart of P-Lingua's language processing pipeline, responsible for transforming P-Lingua source code into executable P-system models.
 
@@ -559,3 +563,263 @@ graph LR
 ```
 
 This deep dive into P-Lingua's component architecture reveals the sophisticated design patterns and engineering decisions that make the framework both powerful and maintainable. Each component is designed with clear responsibilities and well-defined interfaces, enabling extensibility and optimization.
+
+## RR-Enhanced Components
+
+The RR enhancement layer adds four major component systems that transform traditional membrane computing into a cognitive architecture platform.
+
+### RR Hypergraph Component
+
+The RR Hypergraph is the core component that implements Relevance Realization dynamics through trialectic co-constitution.
+
+```mermaid
+classDiagram
+    class RRHypergraph {
+        +map~unsigned, RRNode~ nodes
+        +map~unsigned, RREdge~ edges
+        +set~unsigned~ agent_nodes
+        +set~unsigned~ arena_nodes
+        +set~unsigned~ relation_edges
+        +updateRelevanceRealization(delta_time)
+        +detectEmergentPatterns()
+        +computeCouplingStrength(agent_id, arena_id)
+        +addMembraneNode(membrane_id, label, aar_type)
+        +addRelationEdge(from, to, type, strength)
+    }
+    
+    class RRNode {
+        +unsigned id
+        +Type nodeType
+        +AARType aarType
+        +string label
+        +double salience
+        +double affordance_potential
+        +double affordance_realization
+        +vector~double~ trialectic_state
+        +computeRelevanceGradient()
+        +updateSalience(delta_time)
+        +computeTrialecticCoherence()
+    }
+    
+    class RREdge {
+        +unsigned id
+        +Type edgeType
+        +unsigned from_node
+        +unsigned to_node
+        +double strength
+        +double relevance_weight
+        +updateCoConstruction(from, to, delta_time)
+    }
+    
+    RRHypergraph --> RRNode
+    RRHypergraph --> RREdge
+```
+
+### AtomSpace Integration Component
+
+The AtomSpace Integration bridges RR dynamics with symbolic reasoning through OpenCog AtomSpace.
+
+```mermaid
+graph TB
+    subgraph "RR-AtomSpace Bridge"
+        A[RRAtomSpaceIntegrator]
+        B[Node Conversion]
+        C[Edge Conversion]
+        D[Property Synchronization]
+    end
+    
+    subgraph "AtomSpace Structure"
+        E[Concept Nodes]
+        F[Evaluation Links]
+        G[Inheritance Links]
+        H[Truth Values]
+    end
+    
+    subgraph "Pattern Detection"
+        I[Emergent Pattern Finder]
+        J[Coupling Analyzer]
+        K[Salience Tracker]
+    end
+    
+    A --> B
+    A --> C
+    A --> D
+    
+    B --> E
+    C --> F
+    D --> G
+    D --> H
+    
+    E --> I
+    F --> J
+    G --> K
+    
+    style A fill:#e8f5e8
+    style E fill:#f3e5f5
+    style I fill:#e3f2fd
+```
+
+### PLN Integration Component
+
+The PLN Integration component provides probabilistic logic reasoning over the integrated RR-AtomSpace structures.
+
+```mermaid
+flowchart TD
+    A[PLN Engine] --> B[Truth Value System]
+    A --> C[Inference Rules]
+    A --> D[Pattern Generator]
+    
+    B --> E[PLN Strength]
+    B --> F[PLN Confidence]
+    B --> G[Truth Operations]
+    
+    C --> H[Deduction Rule]
+    C --> I[Abduction Rule]
+    C --> J[Implication Generation]
+    
+    D --> K[RR Pattern Detector]
+    D --> L[Coupling Analyzer]
+    D --> M[Emergent Relation Creator]
+    
+    G --> H
+    G --> I
+    K --> J
+    L --> J
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+```
+
+### Scheme Interface Component
+
+The Scheme Interface provides interactive exploration and manipulation capabilities.
+
+```mermaid
+graph LR
+    subgraph "REPL Interface"
+        A[Command Parser]
+        B[Expression Evaluator]
+        C[Result Formatter]
+    end
+    
+    subgraph "Command Categories"
+        D[RR Queries]
+        E[AtomSpace Queries]
+        F[System Updates]
+        G[Inference Control]
+    end
+    
+    subgraph "System Access"
+        H[RR Hypergraph Interface]
+        I[AtomSpace Interface]
+        J[PLN Engine Interface]
+    end
+    
+    A --> B
+    B --> C
+    
+    B --> D
+    B --> E
+    B --> F
+    B --> G
+    
+    D --> H
+    E --> I
+    F --> H
+    G --> J
+    
+    style B fill:#e8f5e8
+    style H fill:#f3e5f5
+```
+
+### Persistent Storage Component
+
+The Persistent Storage component handles serialization, memory consolidation, and incremental learning.
+
+```mermaid
+sequenceDiagram
+    participant PS as Persistent Storage
+    participant JSON as JSON Serializer
+    participant RR as RR Serializer
+    participant AS as AtomSpace Serializer
+    participant MC as Memory Consolidator
+    
+    PS->>RR: Serialize RR hypergraph
+    RR->>JSON: Convert to JSON format
+    JSON-->>PS: RR JSON data
+    
+    PS->>AS: Serialize AtomSpace
+    AS->>JSON: Convert to JSON format
+    JSON-->>PS: AtomSpace JSON data
+    
+    PS->>MC: Consolidate memory
+    MC->>MC: Remove low-confidence atoms
+    MC-->>PS: Optimized structures
+    
+    PS->>PS: Write to persistent storage
+```
+
+## Component Interaction Patterns
+
+### RR-AtomSpace Synchronization
+
+```mermaid
+sequenceDiagram
+    participant RR as RR Hypergraph
+    participant Bridge as Integration Bridge
+    participant AS as AtomSpace
+    participant PLN as PLN Engine
+    
+    RR->>Bridge: RR node updates
+    Bridge->>AS: Create/update concept nodes
+    AS->>Bridge: Confirm atom updates
+    Bridge->>RR: Sync confirmation
+    
+    RR->>Bridge: RR edge updates
+    Bridge->>AS: Create/update evaluation links
+    AS->>PLN: New relations available
+    PLN->>AS: Generate implications
+    AS->>Bridge: Pattern changes detected
+    Bridge->>RR: Feedback to RR dynamics
+```
+
+### Multi-Level Emergence Detection
+
+```mermaid
+graph TD
+    subgraph "Level Monitoring"
+        A[Agent Salience Monitor]
+        B[Arena Coupling Monitor]
+        C[Cross-Level Pattern Detector]
+    end
+    
+    subgraph "Emergence Criteria"
+        D[High Salience: > 0.8]
+        E[Strong Coupling: > 0.8]
+        F[High Coherence: > 0.6]
+    end
+    
+    subgraph "Emergence Actions"
+        G[Create Emergent Relation]
+        H[Update Multi-Level State]
+        I[Record Emergence Event]
+    end
+    
+    A --> D
+    B --> E
+    C --> F
+    
+    D --> G
+    E --> G
+    F --> G
+    
+    G --> H
+    H --> I
+    
+    style A fill:#e3f2fd
+    style G fill:#e8f5e8
+```
+
+This enhanced component architecture demonstrates how RR-PLingua successfully integrates dynamic self-organization with symbolic reasoning, creating a sophisticated platform for cognitive membrane computing applications.
