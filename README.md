@@ -181,12 +181,79 @@ Available Scheme commands:
 - **Adaptive Membrane Behavior**: Agent-arena coupling drives membrane evolution
 - **Hierarchical Organization**: Multi-level integration supports complex system architectures
 
-## 📚 Documentation
+## 📚 Comprehensive Technical Architecture Documentation
+
+### 🏗️ [Complete Architecture Documentation](docs/README.md)
+Comprehensive technical architecture covering all system aspects:
+
+| Document | Focus | Key Diagrams |
+|----------|-------|--------------|
+| **[📊 Technical Architecture](docs/TECHNICAL_ARCHITECTURE.md)** | **Master System Overview** | System integration, API design, deployment, security |
+| **[🔧 Core Architecture](docs/ARCHITECTURE.md)** | **P-Lingua Framework** | Parser, simulator, code generation, extensions |
+| **[🧠 RR Architecture](docs/RR_ARCHITECTURE.md)** | **Cognitive Dynamics** | Trialectic processing, AtomSpace integration, PLN |
+| **[⚙️ Component Analysis](docs/COMPONENTS.md)** | **Implementation Details** | Serialization, code generation, data structures |
+| **[🔄 Process Flows](docs/RR_PROCESS_FLOWS.md)** | **System Workflows** | End-to-end processes, integration patterns |
+| **[📖 Executive Summary](docs/EXECUTIVE_SUMMARY.md)** | **High-Level Overview** | Key innovations, implementation status |
+
+### 🎯 Architecture Highlights
+
+```mermaid
+graph LR
+    subgraph "🏗️ System Architecture"
+        INTEGRATION[System Integration]
+        DEPLOYMENT[Deployment & Ops]
+        SECURITY[Security Framework]
+        PERFORMANCE[Performance & Scale]
+    end
+    
+    subgraph "🧠 Cognitive Architecture"
+        RR_DYNAMICS[RR Trialectic Dynamics]
+        ATOMSPACE[AtomSpace Integration]
+        PLN_INFERENCE[PLN Reasoning]
+        EMERGENCE[Emergence Detection]
+    end
+    
+    subgraph "⚙️ Implementation Architecture"
+        COMPONENTS[Core Components]
+        DATA_FLOW[Data Processing]
+        API_DESIGN[Interface Design]
+        EXTENSIONS[Plugin Framework]
+    end
+    
+    INTEGRATION --> RR_DYNAMICS
+    DEPLOYMENT --> ATOMSPACE
+    SECURITY --> PLN_INFERENCE
+    PERFORMANCE --> EMERGENCE
+    
+    RR_DYNAMICS --> COMPONENTS
+    ATOMSPACE --> DATA_FLOW
+    PLN_INFERENCE --> API_DESIGN
+    EMERGENCE --> EXTENSIONS
+    
+    style INTEGRATION fill:#e3f2fd
+    style RR_DYNAMICS fill:#f3e5f5
+    style COMPONENTS fill:#e8f5e8
+    style DEPLOYMENT fill:#fff3e0
+```
+
+### 🌟 Revolutionary Architecture Features
+
+**🔗 Unified Cognitive Computing**: First platform to seamlessly integrate membrane computing, relevance realization, and symbolic reasoning
+
+**🧠 Trialectic Implementation**: Complete agent-arena-relation cognitive framework with adaptive dynamics
+
+**⚡ Multi-Level Processing**: Hierarchical emergence detection with cross-level coordination
+
+**💾 Persistent Learning**: Continuous knowledge accumulation through AtomSpace serialization
+
+**🎛️ Interactive Exploration**: Real-time system manipulation via comprehensive Scheme REPL
+
+**🏗️ Production Ready**: Enterprise-grade deployment architecture with full operational support
 
 ### [Comprehensive RR-RNN Documentation](docs/README.md)
-Detailed technical documentation with diagrams covering:
-- **[RR-RNN Architecture](docs/ARCHITECTURE.md)**: Relevance Realization integration patterns
-- **[Component Deep Dive](docs/COMPONENTS.md)**: PLN, Scheme, and persistence systems
+Detailed technical documentation with comprehensive mermaid diagrams covering:
+- **[RR-RNN Architecture](docs/RR_ARCHITECTURE.md)**: Relevance Realization integration patterns
+- **[Component Deep Dive](docs/COMPONENTS.md)**: PLN, Scheme, and persistence systems  
 - **[Usage Examples](docs/EXAMPLES.md)**: RR dynamics and AtomSpace integration demos
 
 ### Core Implementation Files

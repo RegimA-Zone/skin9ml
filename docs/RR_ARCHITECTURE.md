@@ -582,4 +582,501 @@ Where:
 - `l` = number of links
 - `c` = inference cycles
 
-This architecture documentation provides a comprehensive view of how RR-RNN enhances traditional membrane computing with cognitive capabilities, creating a sophisticated platform for symbolic-subsymbolic integration and emergent pattern recognition.
+## RR-Specific Design Patterns
+
+### Trialectic Pattern Implementation
+
+```mermaid
+graph TB
+    subgraph "Agent Subsystem"
+        A1[Agent State]
+        A2[Agent Actions]
+        A3[Agent Goals]
+        A4[Agent Salience]
+    end
+    
+    subgraph "Arena Subsystem"
+        B1[Arena Configuration]
+        B2[Arena Constraints]
+        B3[Arena Affordances]
+        B4[Arena Coupling]
+    end
+    
+    subgraph "Relation Subsystem"
+        C1[Relation Strength]
+        C2[Relation Dynamics]
+        C3[Relation Patterns]
+        C4[Relation Evolution]
+    end
+    
+    subgraph "Trialectic Coordinator"
+        TC[Trialectic Controller]
+        EM[Emergence Monitor]
+        RG[Relevance Generator]
+        CL[Coherence Evaluator]
+    end
+    
+    A1 --> TC
+    A2 --> TC
+    A3 --> EM
+    A4 --> RG
+    
+    B1 --> TC
+    B2 --> EM
+    B3 --> RG
+    B4 --> CL
+    
+    C1 --> TC
+    C2 --> EM
+    C3 --> RG
+    C4 --> CL
+    
+    TC --> EM
+    EM --> RG
+    RG --> CL
+    CL --> TC
+    
+    style TC fill:#fff3e0
+    style EM fill:#e8f5e8
+    style RG fill:#f3e5f5
+    style CL fill:#e3f2fd
+```
+
+### RR State Machine Architecture
+
+```mermaid
+stateDiagram-v2
+    [*] --> Initialization
+    
+    Initialization --> AgentFormation: Create Agents
+    AgentFormation --> ArenaSetup: Setup Arena
+    ArenaSetup --> RelationBuilding: Establish Relations
+    
+    RelationBuilding --> SalienceComputation
+    
+    state SalienceComputation {
+        [*] --> ComputeAffordance
+        ComputeAffordance --> UpdateCoupling
+        UpdateCoupling --> EvaluateRelevance
+        EvaluateRelevance --> [*]
+    }
+    
+    SalienceComputation --> EmergenceDetection: High Salience
+    SalienceComputation --> SalienceComputation: Continue Updates
+    
+    state EmergenceDetection {
+        [*] --> CheckCoherence
+        CheckCoherence --> DetectPatterns
+        DetectPatterns --> RecordEmergence
+        RecordEmergence --> [*]
+    }
+    
+    EmergenceDetection --> MultiLevelIntegration: Emergence Found
+    EmergenceDetection --> SalienceComputation: No Emergence
+    
+    state MultiLevelIntegration {
+        [*] --> CreateHierarchy
+        CreateHierarchy --> CrossLevelSync
+        CrossLevelSync --> UpdateSystemState
+        UpdateSystemState --> [*]
+    }
+    
+    MultiLevelIntegration --> AtomSpaceSync
+    
+    state AtomSpaceSync {
+        [*] --> MapToAtoms
+        MapToAtoms --> UpdateTruthValues
+        UpdateTruthValues --> TriggerPLN
+        TriggerPLN --> [*]
+    }
+    
+    AtomSpaceSync --> SalienceComputation: Continue Processing
+    AtomSpaceSync --> PersistentStorage: Save State
+    
+    PersistentStorage --> SalienceComputation: Resume
+    PersistentStorage --> [*]: Shutdown
+```
+
+## Advanced RR Integration Patterns
+
+### Cognitive Architecture Integration
+
+```mermaid
+graph TD
+    subgraph "Cognitive Layers"
+        REACTIVE[Reactive Layer]
+        DELIBERATIVE[Deliberative Layer]
+        REFLECTIVE[Reflective Layer]
+        METACOGNITIVE[Metacognitive Layer]
+    end
+    
+    subgraph "RR Integration Points"
+        RR_REACTIVE[RR Reactive Salience]
+        RR_DELIB[RR Pattern Recognition]
+        RR_REFLECT[RR Emergence Analysis]
+        RR_META[RR System Relevance]
+    end
+    
+    subgraph "AtomSpace Layers"
+        SENSORY[Sensory Atoms]
+        CONCEPTUAL[Conceptual Atoms]
+        ABSTRACT[Abstract Atoms]
+        SYMBOLIC[Symbolic Atoms]
+    end
+    
+    subgraph "PLN Reasoning Levels"
+        PLN_BASIC[Basic Inference]
+        PLN_COMPLEX[Complex Reasoning]
+        PLN_ABDUCTIVE[Abductive Reasoning]
+        PLN_CREATIVE[Creative Inference]
+    end
+    
+    REACTIVE --> RR_REACTIVE
+    DELIBERATIVE --> RR_DELIB
+    REFLECTIVE --> RR_REFLECT
+    METACOGNITIVE --> RR_META
+    
+    RR_REACTIVE --> SENSORY
+    RR_DELIB --> CONCEPTUAL
+    RR_REFLECT --> ABSTRACT
+    RR_META --> SYMBOLIC
+    
+    SENSORY --> PLN_BASIC
+    CONCEPTUAL --> PLN_COMPLEX
+    ABSTRACT --> PLN_ABDUCTIVE
+    SYMBOLIC --> PLN_CREATIVE
+    
+    PLN_BASIC --> RR_REACTIVE
+    PLN_COMPLEX --> RR_DELIB
+    PLN_ABDUCTIVE --> RR_REFLECT
+    PLN_CREATIVE --> RR_META
+    
+    style RR_REACTIVE fill:#ffebee
+    style RR_DELIB fill:#f3e5f5
+    style RR_REFLECT fill:#e8f5e8
+    style RR_META fill:#e3f2fd
+```
+
+### Membrane-RR Coupling Architecture
+
+```mermaid
+graph LR
+    subgraph "P-System Membranes"
+        M1[Environment Membrane]
+        M2[Agent Membrane A]
+        M3[Agent Membrane B]
+        M4[Arena Membrane]
+    end
+    
+    subgraph "RR Hypergraph Mapping"
+        R1[Environment Node]
+        R2[Agent Node A]
+        R3[Agent Node B]
+        R4[Arena Node]
+    end
+    
+    subgraph "Coupling Dynamics"
+        C1[Membrane-Node Sync]
+        C2[Rule-Edge Mapping]
+        C3[Object-Property Sync]
+        C4[Evolution Coordination]
+    end
+    
+    subgraph "AtomSpace Representation"
+        A1[Environment Concept]
+        A2[Agent Concept A]
+        A3[Agent Concept B]
+        A4[Arena Concept]
+    end
+    
+    M1 --> R1
+    M2 --> R2
+    M3 --> R3
+    M4 --> R4
+    
+    R1 --> C1
+    R2 --> C2
+    R3 --> C3
+    R4 --> C4
+    
+    C1 --> A1
+    C2 --> A2
+    C3 --> A3
+    C4 --> A4
+    
+    A1 --> R1
+    A2 --> R2
+    A3 --> R3
+    A4 --> R4
+    
+    style C1 fill:#fff3e0
+    style C2 fill:#f3e5f5
+    style C3 fill:#e8f5e8
+    style C4 fill:#e3f2fd
+```
+
+## RR Performance Optimization Architecture
+
+### Computational Optimization Pipeline
+
+```mermaid
+flowchart TD
+    INPUT[RR Computation Request]
+    
+    subgraph "Optimization Stages"
+        CACHE[Cache Lookup]
+        PARALLEL[Parallel Processing]
+        BATCH[Batch Operations]
+        LAZY[Lazy Evaluation]
+    end
+    
+    subgraph "RR-Specific Optimizations"
+        SALIENCE_CACHE[Salience Caching]
+        EMERGENCE_FILTER[Emergence Filtering]
+        RELATION_INDEX[Relation Indexing]
+        COHERENCE_APPROX[Coherence Approximation]
+    end
+    
+    subgraph "AtomSpace Optimizations"
+        ATOM_CACHE[Atom Caching]
+        PATTERN_INDEX[Pattern Indexing]
+        TRUTH_BATCH[Truth Value Batching]
+        LINK_OPTIMIZE[Link Optimization]
+    end
+    
+    subgraph "Output Optimization"
+        RESULT_CACHE[Result Caching]
+        INCREMENTAL[Incremental Updates]
+        COMPRESS[Data Compression]
+        STREAM[Streaming Output]
+    end
+    
+    INPUT --> CACHE
+    CACHE --> PARALLEL
+    PARALLEL --> BATCH
+    BATCH --> LAZY
+    
+    LAZY --> SALIENCE_CACHE
+    LAZY --> EMERGENCE_FILTER
+    LAZY --> RELATION_INDEX
+    LAZY --> COHERENCE_APPROX
+    
+    SALIENCE_CACHE --> ATOM_CACHE
+    EMERGENCE_FILTER --> PATTERN_INDEX
+    RELATION_INDEX --> TRUTH_BATCH
+    COHERENCE_APPROX --> LINK_OPTIMIZE
+    
+    ATOM_CACHE --> RESULT_CACHE
+    PATTERN_INDEX --> INCREMENTAL
+    TRUTH_BATCH --> COMPRESS
+    LINK_OPTIMIZE --> STREAM
+    
+    style CACHE fill:#e8f5e8
+    style SALIENCE_CACHE fill:#f3e5f5
+    style ATOM_CACHE fill:#e3f2fd
+    style RESULT_CACHE fill:#fff3e0
+```
+
+## Error Handling and Recovery Architecture
+
+### RR-Specific Error Management
+
+```mermaid
+graph TB
+    subgraph "Error Sources"
+        RR_ERROR[RR Computation Errors]
+        TRIALECTIC_ERROR[Trialectic Inconsistencies]
+        EMERGENCE_ERROR[Emergence Detection Failures]
+        SYNC_ERROR[AtomSpace Sync Errors]
+    end
+    
+    subgraph "Error Detection"
+        SALIENCE_CHECK[Salience Validation]
+        COHERENCE_CHECK[Coherence Validation]
+        CONSISTENCY_CHECK[Consistency Check]
+        INTEGRITY_CHECK[Data Integrity Check]
+    end
+    
+    subgraph "Error Recovery"
+        RR_RECOVERY[RR State Recovery]
+        ATOM_RECOVERY[AtomSpace Recovery]
+        SYNC_RECOVERY[Sync Recovery]
+        GRACEFUL_DEGRADE[Graceful Degradation]
+    end
+    
+    subgraph "Error Reporting"
+        ERROR_LOG[Error Logging]
+        USER_FEEDBACK[User Feedback]
+        DIAGNOSTICS[System Diagnostics]
+        METRICS[Error Metrics]
+    end
+    
+    RR_ERROR --> SALIENCE_CHECK
+    TRIALECTIC_ERROR --> COHERENCE_CHECK
+    EMERGENCE_ERROR --> CONSISTENCY_CHECK
+    SYNC_ERROR --> INTEGRITY_CHECK
+    
+    SALIENCE_CHECK --> RR_RECOVERY
+    COHERENCE_CHECK --> ATOM_RECOVERY
+    CONSISTENCY_CHECK --> SYNC_RECOVERY
+    INTEGRITY_CHECK --> GRACEFUL_DEGRADE
+    
+    RR_RECOVERY --> ERROR_LOG
+    ATOM_RECOVERY --> USER_FEEDBACK
+    SYNC_RECOVERY --> DIAGNOSTICS
+    GRACEFUL_DEGRADE --> METRICS
+    
+    style RR_ERROR fill:#ffebee
+    style SALIENCE_CHECK fill:#fff3e0
+    style RR_RECOVERY fill:#e8f5e8
+    style ERROR_LOG fill:#f3e5f5
+```
+
+## Advanced Use Case Architectures
+
+### Research Platform Architecture
+
+```mermaid
+graph TD
+    subgraph "Research Interface"
+        NOTEBOOK[Jupyter Notebooks]
+        EXPERIMENT[Experiment Manager]
+        ANALYSIS[Analysis Tools]
+        VISUALIZATION[Visualization Dashboard]
+    end
+    
+    subgraph "Research Services"
+        PARAM_SWEEP[Parameter Sweeping]
+        HYPOTHESIS_TEST[Hypothesis Testing]
+        DATA_COLLECTION[Data Collection]
+        RESULT_ANALYSIS[Result Analysis]
+    end
+    
+    subgraph "RR Research Components"
+        RR_EXPERIMENTS[RR Experiments]
+        EMERGENCE_STUDIES[Emergence Studies]
+        TRIALECTIC_ANALYSIS[Trialectic Analysis]
+        COGNITIVE_MODELING[Cognitive Modeling]
+    end
+    
+    subgraph "Data Management"
+        DATASET_STORE[Dataset Storage]
+        RESULT_STORE[Result Storage]
+        METADATA_MGR[Metadata Manager]
+        VERSION_CTRL[Version Control]
+    end
+    
+    NOTEBOOK --> EXPERIMENT
+    EXPERIMENT --> ANALYSIS
+    ANALYSIS --> VISUALIZATION
+    
+    EXPERIMENT --> PARAM_SWEEP
+    EXPERIMENT --> HYPOTHESIS_TEST
+    EXPERIMENT --> DATA_COLLECTION
+    EXPERIMENT --> RESULT_ANALYSIS
+    
+    PARAM_SWEEP --> RR_EXPERIMENTS
+    HYPOTHESIS_TEST --> EMERGENCE_STUDIES
+    DATA_COLLECTION --> TRIALECTIC_ANALYSIS
+    RESULT_ANALYSIS --> COGNITIVE_MODELING
+    
+    RR_EXPERIMENTS --> DATASET_STORE
+    EMERGENCE_STUDIES --> RESULT_STORE
+    TRIALECTIC_ANALYSIS --> METADATA_MGR
+    COGNITIVE_MODELING --> VERSION_CTRL
+    
+    style EXPERIMENT fill:#e3f2fd
+    style RR_EXPERIMENTS fill:#f3e5f5
+    style DATASET_STORE fill:#e8f5e8
+```
+
+### Production Deployment Architecture
+
+```mermaid
+graph LR
+    subgraph "Load Balancing"
+        LB[Load Balancer]
+        HEALTH[Health Checks]
+        ROUTING[Request Routing]
+    end
+    
+    subgraph "Application Cluster"
+        APP1[RR-P Instance 1]
+        APP2[RR-P Instance 2]
+        APP3[RR-P Instance N]
+    end
+    
+    subgraph "Shared Services"
+        REDIS[Redis Cache]
+        MESSAGE_QUEUE[Message Queue]
+        FILE_STORAGE[File Storage]
+        CONFIG_SVC[Config Service]
+    end
+    
+    subgraph "Data Persistence"
+        ATOMSPACE_DB[AtomSpace Database]
+        RR_STORE[RR Hypergraph Store]
+        BACKUP_SVC[Backup Service]
+        REPLICATION[Data Replication]
+    end
+    
+    subgraph "Monitoring & Ops"
+        PROMETHEUS[Prometheus]
+        GRAFANA[Grafana Dashboards]
+        ALERTMANAGER[Alert Manager]
+        LOG_AGGREGATOR[Log Aggregation]
+    end
+    
+    LB --> HEALTH
+    HEALTH --> ROUTING
+    ROUTING --> APP1
+    ROUTING --> APP2
+    ROUTING --> APP3
+    
+    APP1 --> REDIS
+    APP2 --> MESSAGE_QUEUE
+    APP3 --> FILE_STORAGE
+    APP1 --> CONFIG_SVC
+    
+    APP1 --> ATOMSPACE_DB
+    APP2 --> RR_STORE
+    APP3 --> BACKUP_SVC
+    ATOMSPACE_DB --> REPLICATION
+    
+    APP1 --> PROMETHEUS
+    APP2 --> GRAFANA
+    APP3 --> ALERTMANAGER
+    PROMETHEUS --> LOG_AGGREGATOR
+    
+    style LB fill:#e3f2fd
+    style APP1 fill:#f3e5f5
+    style REDIS fill:#e8f5e8
+    style ATOMSPACE_DB fill:#fff3e0
+    style PROMETHEUS fill:#ffebee
+```
+
+## Conclusion
+
+This comprehensive RR-RNN architecture documentation provides detailed insights into how Relevance Realization enhances traditional membrane computing with cognitive capabilities. The architecture demonstrates sophisticated integration patterns between:
+
+### Key Architectural Innovations
+
+**Trialectic Integration**: Seamless coupling between agent-arena-relation dynamics and symbolic reasoning, creating a unified cognitive computing platform.
+
+**Multi-Level Processing**: Hierarchical emergence detection across system levels, enabling complex pattern recognition and adaptive behavior.
+
+**Persistent Learning**: Knowledge accumulation through AtomSpace serialization and memory consolidation, supporting continuous system evolution.
+
+**Interactive Exploration**: Real-time system manipulation through Scheme REPL interface, enabling researchers to explore cognitive dynamics interactively.
+
+### Production-Ready Features
+
+**Scalability**: Horizontal and vertical scaling capabilities with optimized performance characteristics for large-scale cognitive computing workloads.
+
+**Reliability**: Comprehensive error handling, recovery mechanisms, and graceful degradation ensuring robust operation in production environments.
+
+**Observability**: Full monitoring, logging, and diagnostics capabilities providing complete system visibility for operations and research.
+
+**Extensibility**: Plugin architecture and API framework supporting custom cognitive models, reasoning patterns, and integration with external systems.
+
+The RR-RNN architecture represents a significant advancement in cognitive membrane computing, providing a sophisticated platform for research in artificial intelligence, complex systems modeling, and cognitive architectures. The comprehensive technical documentation ensures the system can be understood, extended, and operated effectively by researchers and engineers working with advanced cognitive computing systems.
