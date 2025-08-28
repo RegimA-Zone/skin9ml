@@ -474,15 +474,469 @@ graph LR
     style I fill:#e3f2fd
 ```
 
+## Integration Architecture with External Systems
+
+```mermaid
+graph TB
+    subgraph "External Integration Points"
+        EXT_API[External APIs]
+        FILE_SYS[File Systems]
+        DB[Databases]
+        CLOUD[Cloud Services]
+        IDE[IDE Plugins]
+    end
+    
+    subgraph "Integration Adapters"
+        REST_ADAPTER[REST API Adapter]
+        FILE_ADAPTER[File System Adapter]
+        DB_ADAPTER[Database Adapter]
+        CLOUD_ADAPTER[Cloud Storage Adapter]
+        PLUGIN_ADAPTER[IDE Plugin Adapter]
+    end
+    
+    subgraph "Core System"
+        INTEGRATION_BUS[Integration Bus]
+        PARSER_CORE[Parser Core]
+        SIMULATOR_CORE[Simulator Core]
+        GENERATOR_CORE[Generator Core]
+        RR_CORE[RR Core]
+        ATOMSPACE_CORE[AtomSpace Core]
+    end
+    
+    EXT_API --> REST_ADAPTER
+    FILE_SYS --> FILE_ADAPTER
+    DB --> DB_ADAPTER
+    CLOUD --> CLOUD_ADAPTER
+    IDE --> PLUGIN_ADAPTER
+    
+    REST_ADAPTER --> INTEGRATION_BUS
+    FILE_ADAPTER --> INTEGRATION_BUS
+    DB_ADAPTER --> INTEGRATION_BUS
+    CLOUD_ADAPTER --> INTEGRATION_BUS
+    PLUGIN_ADAPTER --> INTEGRATION_BUS
+    
+    INTEGRATION_BUS --> PARSER_CORE
+    INTEGRATION_BUS --> SIMULATOR_CORE
+    INTEGRATION_BUS --> GENERATOR_CORE
+    INTEGRATION_BUS --> RR_CORE
+    INTEGRATION_BUS --> ATOMSPACE_CORE
+    
+    style INTEGRATION_BUS fill:#fff3e0
+    style RR_CORE fill:#f3e5f5
+    style ATOMSPACE_CORE fill:#e8f5e8
+```
+
+## Class Relationship Architecture
+
+```mermaid
+classDiagram
+    class PSystem {
+        +model: String
+        +structure: Membrane
+        +rules: set~Rule~
+        +environments: vector~Environment~
+        +parse()
+        +simulate()
+        +generateCode()
+    }
+    
+    class Membrane {
+        +charge: char
+        +label: Label
+        +parent: Membrane*
+        +children: vector~Membrane~
+        +objects: Multiset
+        +addObject()
+        +removeObject()
+        +dissolve()
+    }
+    
+    class Rule {
+        +leftSide: vector~Object~
+        +rightSide: vector~Object~
+        +guard: Condition
+        +priority: int
+        +isApplicable()
+        +apply()
+    }
+    
+    class RRHypergraph {
+        +nodes: vector~RRNode~
+        +edges: vector~RREdge~
+        +salience_map: map~string,float~
+        +addNode()
+        +addEdge()
+        +updateSalience()
+        +computeRelevance()
+    }
+    
+    class AtomSpace {
+        +atoms: vector~Atom~
+        +truthValues: map~Handle,TruthValue~
+        +addAtom()
+        +removeAtom()
+        +getAtom()
+        +findAtoms()
+    }
+    
+    class PLNInference {
+        +rules: vector~InferenceRule~
+        +atomspace: AtomSpace*
+        +applyRule()
+        +runInference()
+        +generateImplications()
+    }
+    
+    class SchemeInterface {
+        +evaluator: SchemeEvaluator
+        +commands: map~string,function~
+        +repl: REPLManager
+        +evaluateExpression()
+        +startREPL()
+        +registerCommand()
+    }
+    
+    PSystem ||--o{ Membrane : contains
+    PSystem ||--o{ Rule : contains
+    Membrane ||--o{ Membrane : children
+    
+    RRHypergraph ||--o{ PSystem : enhances
+    AtomSpace ||--o{ PSystem : represents
+    PLNInference ||--|| AtomSpace : operates_on
+    
+    SchemeInterface ||--|| PSystem : controls
+    SchemeInterface ||--|| RRHypergraph : controls
+    SchemeInterface ||--|| AtomSpace : controls
+    SchemeInterface ||--|| PLNInference : controls
+```
+
+## Concurrency and Threading Architecture
+
+```mermaid
+graph TD
+    subgraph "Main Application Thread"
+        MAIN[Main Controller]
+        COORD[Coordinator Thread]
+        UI[UI Thread]
+    end
+    
+    subgraph "Parser Thread Pool"
+        PARSE1[Parser Worker 1]
+        PARSE2[Parser Worker 2]
+        PARSE3[Parser Worker N]
+    end
+    
+    subgraph "Simulation Thread Pool"
+        SIM1[Simulator Worker 1]
+        SIM2[Simulator Worker 2]
+        SIM3[Simulator Worker N]
+    end
+    
+    subgraph "RR Processing Threads"
+        RR1[RR Dynamics Thread 1]
+        RR2[RR Dynamics Thread 2]
+        RR3[RR Update Thread]
+    end
+    
+    subgraph "AtomSpace Threads"
+        ATOM1[AtomSpace Worker 1]
+        ATOM2[AtomSpace Worker 2]
+        PLN1[PLN Inference Thread]
+    end
+    
+    subgraph "I/O Threads"
+        FILE_IO[File I/O Thread]
+        NET_IO[Network I/O Thread]
+        PERSIST[Persistence Thread]
+    end
+    
+    subgraph "Synchronization"
+        MUTEX[Mutex Locks]
+        SEMA[Semaphores]
+        QUEUE[Thread-Safe Queues]
+        ATOMIC[Atomic Operations]
+    end
+    
+    MAIN --> COORD
+    MAIN --> UI
+    
+    COORD --> PARSE1
+    COORD --> PARSE2
+    COORD --> PARSE3
+    
+    COORD --> SIM1
+    COORD --> SIM2
+    COORD --> SIM3
+    
+    COORD --> RR1
+    COORD --> RR2
+    COORD --> RR3
+    
+    COORD --> ATOM1
+    COORD --> ATOM2
+    COORD --> PLN1
+    
+    COORD --> FILE_IO
+    COORD --> NET_IO
+    COORD --> PERSIST
+    
+    PARSE1 --> QUEUE
+    SIM1 --> QUEUE
+    RR1 --> MUTEX
+    ATOM1 --> SEMA
+    PLN1 --> ATOMIC
+    
+    style COORD fill:#fff3e0
+    style RR1 fill:#f3e5f5
+    style ATOM1 fill:#e8f5e8
+    style QUEUE fill:#e3f2fd
+```
+
+## Memory Management Architecture
+
+```mermaid
+graph TB
+    subgraph "Memory Pools"
+        SYSTEM_POOL[System Memory Pool]
+        OBJECT_POOL[Object Memory Pool]
+        STRING_POOL[String Memory Pool]
+        ATOM_POOL[Atom Memory Pool]
+        RR_POOL[RR Memory Pool]
+    end
+    
+    subgraph "Memory Managers"
+        POOL_MGR[Pool Manager]
+        CACHE_MGR[Cache Manager]
+        GC_MGR[Garbage Collector]
+        COMPACT_MGR[Compaction Manager]
+    end
+    
+    subgraph "Memory Allocators"
+        STACK_ALLOC[Stack Allocator]
+        HEAP_ALLOC[Heap Allocator]
+        CUSTOM_ALLOC[Custom Allocator]
+        SHARED_ALLOC[Shared Memory Allocator]
+    end
+    
+    subgraph "Memory Monitoring"
+        USAGE_MON[Usage Monitor]
+        LEAK_DET[Leak Detector]
+        PERF_MON[Performance Monitor]
+        ALERT_SYS[Alert System]
+    end
+    
+    SYSTEM_POOL --> POOL_MGR
+    OBJECT_POOL --> POOL_MGR
+    STRING_POOL --> CACHE_MGR
+    ATOM_POOL --> GC_MGR
+    RR_POOL --> COMPACT_MGR
+    
+    POOL_MGR --> STACK_ALLOC
+    CACHE_MGR --> HEAP_ALLOC
+    GC_MGR --> CUSTOM_ALLOC
+    COMPACT_MGR --> SHARED_ALLOC
+    
+    STACK_ALLOC --> USAGE_MON
+    HEAP_ALLOC --> LEAK_DET
+    CUSTOM_ALLOC --> PERF_MON
+    SHARED_ALLOC --> ALERT_SYS
+    
+    style POOL_MGR fill:#e8f5e8
+    style GC_MGR fill:#fff3e0
+    style USAGE_MON fill:#f3e5f5
+```
+
+## Configuration and Setup Architecture
+
+```mermaid
+graph LR
+    subgraph "Configuration Sources"
+        CLI_ARGS[Command Line Arguments]
+        ENV_VARS[Environment Variables]
+        CONFIG_FILES[Configuration Files]
+        DEFAULTS[Default Settings]
+    end
+    
+    subgraph "Configuration Processing"
+        PARSER_CONFIG[Config Parser]
+        VALIDATOR[Config Validator]
+        MERGER[Config Merger]
+        RESOLVER[Config Resolver]
+    end
+    
+    subgraph "Configuration Storage"
+        RUNTIME_CONFIG[Runtime Configuration]
+        CACHED_CONFIG[Cached Configuration]
+        TEMPLATE_CONFIG[Template Configuration]
+        SCHEMA[Configuration Schema]
+    end
+    
+    subgraph "Configuration Distribution"
+        COMPONENT_A[Parser Component]
+        COMPONENT_B[Simulator Component]
+        COMPONENT_C[RR Component]
+        COMPONENT_D[AtomSpace Component]
+    end
+    
+    CLI_ARGS --> PARSER_CONFIG
+    ENV_VARS --> PARSER_CONFIG
+    CONFIG_FILES --> PARSER_CONFIG
+    DEFAULTS --> PARSER_CONFIG
+    
+    PARSER_CONFIG --> VALIDATOR
+    VALIDATOR --> MERGER
+    MERGER --> RESOLVER
+    
+    RESOLVER --> RUNTIME_CONFIG
+    RESOLVER --> CACHED_CONFIG
+    RUNTIME_CONFIG --> TEMPLATE_CONFIG
+    CACHED_CONFIG --> SCHEMA
+    
+    RUNTIME_CONFIG --> COMPONENT_A
+    RUNTIME_CONFIG --> COMPONENT_B
+    RUNTIME_CONFIG --> COMPONENT_C
+    RUNTIME_CONFIG --> COMPONENT_D
+    
+    style PARSER_CONFIG fill:#e3f2fd
+    style RUNTIME_CONFIG fill:#e8f5e8
+    style COMPONENT_C fill:#f3e5f5
+    style COMPONENT_D fill:#fff3e0
+```
+
+## Testing Architecture
+
+```mermaid
+graph TD
+    subgraph "Test Types"
+        UNIT[Unit Tests]
+        INTEGRATION[Integration Tests]
+        SYSTEM[System Tests]
+        PERFORMANCE[Performance Tests]
+        ACCEPTANCE[Acceptance Tests]
+    end
+    
+    subgraph "Test Infrastructure"
+        TEST_FRAMEWORK[Test Framework]
+        MOCK_OBJECTS[Mock Objects]
+        TEST_DATA[Test Data]
+        TEST_UTILS[Test Utilities]
+    end
+    
+    subgraph "Test Execution"
+        TEST_RUNNER[Test Runner]
+        PARALLEL_EXEC[Parallel Execution]
+        TEST_REPORTING[Test Reporting]
+        COVERAGE[Coverage Analysis]
+    end
+    
+    subgraph "Continuous Testing"
+        CI_PIPELINE[CI Pipeline]
+        AUTO_TESTS[Automated Tests]
+        REGRESSION[Regression Testing]
+        SMOKE_TESTS[Smoke Tests]
+    end
+    
+    UNIT --> TEST_FRAMEWORK
+    INTEGRATION --> MOCK_OBJECTS
+    SYSTEM --> TEST_DATA
+    PERFORMANCE --> TEST_UTILS
+    ACCEPTANCE --> TEST_UTILS
+    
+    TEST_FRAMEWORK --> TEST_RUNNER
+    MOCK_OBJECTS --> PARALLEL_EXEC
+    TEST_DATA --> TEST_REPORTING
+    TEST_UTILS --> COVERAGE
+    
+    TEST_RUNNER --> CI_PIPELINE
+    PARALLEL_EXEC --> AUTO_TESTS
+    TEST_REPORTING --> REGRESSION
+    COVERAGE --> SMOKE_TESTS
+    
+    style TEST_FRAMEWORK fill:#e8f5e8
+    style TEST_RUNNER fill:#fff3e0
+    style CI_PIPELINE fill:#f3e5f5
+```
+
+## Logging and Monitoring Architecture
+
+```mermaid
+graph LR
+    subgraph "Log Sources"
+        APP_LOGS[Application Logs]
+        ERROR_LOGS[Error Logs]
+        PERF_LOGS[Performance Logs]
+        AUDIT_LOGS[Audit Logs]
+        DEBUG_LOGS[Debug Logs]
+    end
+    
+    subgraph "Log Processing"
+        LOG_COLLECTOR[Log Collector]
+        LOG_PARSER[Log Parser]
+        LOG_FILTER[Log Filter]
+        LOG_ENRICHER[Log Enricher]
+    end
+    
+    subgraph "Log Storage"
+        FILE_STORE[File Storage]
+        DB_STORE[Database Storage]
+        SEARCH_INDEX[Search Index]
+        ARCHIVE[Archive Storage]
+    end
+    
+    subgraph "Monitoring & Alerting"
+        METRICS[Metrics Collection]
+        DASHBOARD[Monitoring Dashboard]
+        ALERTS[Alert Manager]
+        NOTIFICATIONS[Notification System]
+    end
+    
+    APP_LOGS --> LOG_COLLECTOR
+    ERROR_LOGS --> LOG_COLLECTOR
+    PERF_LOGS --> LOG_PARSER
+    AUDIT_LOGS --> LOG_FILTER
+    DEBUG_LOGS --> LOG_ENRICHER
+    
+    LOG_COLLECTOR --> FILE_STORE
+    LOG_PARSER --> DB_STORE
+    LOG_FILTER --> SEARCH_INDEX
+    LOG_ENRICHER --> ARCHIVE
+    
+    FILE_STORE --> METRICS
+    DB_STORE --> DASHBOARD
+    SEARCH_INDEX --> ALERTS
+    ARCHIVE --> NOTIFICATIONS
+    
+    style LOG_COLLECTOR fill:#e3f2fd
+    style METRICS fill:#e8f5e8
+    style DASHBOARD fill:#fff3e0
+    style ALERTS fill:#ffebee
+```
+
 ## Conclusion
 
-This architecture documentation provides a comprehensive view of the P-Lingua framework's design and implementation. The system demonstrates sophisticated patterns for domain-specific language processing, including robust parsing, flexible simulation engines, and extensible code generation capabilities.
+This comprehensive architecture documentation provides detailed views of the P-Lingua framework's design and implementation. The system demonstrates sophisticated patterns for cognitive membrane computing, integrating symbolic reasoning with dynamic self-organization.
 
-Key architectural strengths include:
-- **Modular Design**: Clear separation between parsing, simulation, and generation
-- **Extensibility**: Plugin architecture for custom models and optimizations  
-- **Performance**: Optimized data structures and algorithms for membrane computing
-- **Robustness**: Comprehensive error handling and diagnostics
-- **Maintainability**: Well-structured codebase with clear interfaces
+### Architectural Highlights
 
-The framework serves as an excellent foundation for membrane computing research and applications, providing both high-level abstractions and low-level control when needed.
+**Core Strengths:**
+- **Unified Architecture**: Seamless integration of P-Lingua, RR dynamics, and AtomSpace
+- **Modular Design**: Clear separation of concerns with well-defined interfaces
+- **Extensibility**: Plugin architecture supporting custom models and optimizations
+- **Performance**: Optimized for large-scale membrane computing workloads
+- **Reliability**: Comprehensive error handling, testing, and monitoring
+- **Scalability**: Concurrent processing with thread-safe operations
+
+**Advanced Capabilities:**
+- **Cognitive Integration**: Bridge between symbolic and subsymbolic processing
+- **Real-time Interaction**: Scheme REPL for live system exploration
+- **Persistent Learning**: Knowledge accumulation and memory consolidation
+- **Multi-level Processing**: Hierarchical emergence detection and reasoning
+
+**Production Readiness:**
+- **Security**: Comprehensive security architecture and practices
+- **Monitoring**: Full observability with logging, metrics, and alerting
+- **Testing**: Multi-level testing strategy with automated CI/CD
+- **Configuration**: Flexible configuration management and deployment
+- **Documentation**: Comprehensive technical architecture documentation
+
+The framework represents a significant advancement in membrane computing, providing a robust foundation for cognitive computing research, artificial intelligence applications, and complex systems modeling. The architecture supports both research experimentation and production deployment, making it suitable for diverse use cases from academic research to industrial applications.
