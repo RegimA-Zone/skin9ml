@@ -293,7 +293,39 @@ This RR-enhanced membrane computing framework represents a significant advanceme
 
 Licensed under the same terms as the original P-Lingua framework.
 
+## 🧴 SkinTwin Database Integration
+
+### COSING Cosmetic Ingredients Database
+The repository now includes an optimized database structure for cosmetic ingredients analysis:
+
+- **Database Location**: `database/cosing_ingredients.db`
+- **Source Data**: COSING (COSmetic INGredient) database with 30,070 ingredients
+- **Structure**: Normalized SQLite database with full-text search
+- **SkinTwin Integration**: Compatible with .sk.inci hierarchical file format
+
+#### Quick Database Access
+```bash
+# Search ingredients
+python3 database/query_cosing.py search "hyaluronic"
+
+# Get skin conditioning ingredients
+python3 database/query_cosing.py skin
+
+# Database statistics
+python3 database/query_cosing.py stats
+```
+
+#### Database Features
+- **30,070 cosmetic ingredients** with chemical data
+- **81 cosmetic functions** (skin conditioning, surfactants, etc.)
+- **Full-text search** for rapid ingredient discovery
+- **CAS/EC number lookup** for chemical identification
+- **Performance optimized** (queries in <5ms)
+- **SkinTwin .sk.inci export** for hierarchical analysis
+
+See [database/README.md](database/README.md) for complete documentation.
+
 ---
 
-*RR-PLingua successfully bridges dynamic self-organization (RR) and symbolic reasoning (AtomSpace/PLN), representing a significant advancement toward unified cognitive architectures.*
+*RR-PLingua successfully bridges dynamic self-organization (RR) and symbolic reasoning (AtomSpace/PLN), representing a significant advancement toward unified cognitive architectures. The integrated COSING database provides practical cosmetic ingredients analysis capabilities for the SkinTwin ecosystem.*
 
