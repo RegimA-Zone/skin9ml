@@ -329,3 +329,80 @@ See [database/README.md](database/README.md) for complete documentation.
 
 *RR-PLingua successfully bridges dynamic self-organization (RR) and symbolic reasoning (AtomSpace/PLN), representing a significant advancement toward unified cognitive architectures. The integrated COSING database provides practical cosmetic ingredients analysis capabilities for the SkinTwin ecosystem.*
 
+## 🧴 Skin Cognitive Accounting Framework
+
+### GnuCash Cognitive Framework Adapted to Multiscale Skin Model
+
+The repository now includes a revolutionary adaptation of the **GnuCash Cognitive Accounting Framework** to biological skin modeling, creating the first **Skin Cognitive Accounting System**. This system applies advanced accounting principles to track biological resources, processes, and health states across multiple skin layers.
+
+#### 🎯 Key Features
+
+- **📊 Biological Double-Entry Bookkeeping**: Track skin resources (nutrients, proteins, cells) with accounting precision
+- **🧠 Cognitive Account Types**: Adaptive, predictive, and attention-driven biological accounts
+- **⚖️ PLN-based Biological Validation**: Probabilistic reasoning for biological transaction feasibility
+- **🎯 ECAN Attention Economics**: Resource allocation based on biological priorities
+- **🧬 MOSES Treatment Optimization**: Evolutionary discovery of optimal skincare strategies
+- **🔮 URE Uncertain Reasoning**: Multi-factor uncertainty analysis for skin health predictions
+
+#### 🏗️ Skin Account Architecture
+
+```cpp
+// Biological resource accounts (like financial assets)
+SkinAccountType::NUTRIENT_POOL      // Vitamins, minerals, antioxidants
+SkinAccountType::CELL_POPULATION    // Keratinocytes, melanocytes, fibroblasts  
+SkinAccountType::PROTEIN_RESERVES   // Collagen, elastin, structural proteins
+SkinAccountType::MOISTURE_BALANCE   // Hydration across skin layers
+
+// Biological process accounts (like financial processes)
+SkinAccountType::CELLULAR_SYNTHESIS // Protein synthesis, cell division
+SkinAccountType::DEGRADATION_LOSS   // Protein breakdown, cell death
+SkinAccountType::TREATMENT_INPUT    // Applied skincare interventions
+```
+
+#### 🚀 Quick Demo
+
+```bash
+# Build and run comprehensive demonstration
+g++ -I./include -std=c++11 -o skin_gnucash_demo skin_gnucash_demo.cpp
+./skin_gnucash_demo
+
+# Run basic skin cognitive test
+g++ -I./include -std=c++11 -o test_skin_cognitive test_skin_cognitive.cpp  
+./test_skin_cognitive
+```
+
+#### 📋 System Capabilities
+
+1. **🏦 Biological Resource Tracking**: Monitor nutrient pools, cell populations, and protein reserves using double-entry bookkeeping principles
+2. **🧮 Cognitive Transaction Processing**: Validate biological processes using PLN probabilistic reasoning
+3. **📊 Trial Balance Generation**: Verify biological system balance across resource and process accounts
+4. **📈 P&L Analysis**: Track beneficial vs. detrimental biological processes for overall skin health assessment
+5. **🎯 Attention Economics**: Allocate cognitive resources based on biological urgency and importance
+6. **🔬 Treatment Strategy Optimization**: Use MOSES evolutionary algorithms to discover optimal intervention strategies
+
+#### 🔄 Integration with Existing RR Framework
+
+The Skin Cognitive Framework seamlessly integrates with the existing RR-PLingua system:
+
+- **AtomSpace Integration**: Biological accounts become ConceptNodes with truth values
+- **PLN Reasoning**: Biological relationships encoded as inference rules
+- **RR Dynamics**: Account health states drive relevance realization processes
+- **Emergent Patterns**: Cross-scale biological insights through multi-level integration
+
+#### 📁 Implementation Files
+
+```
+include/skin_cognitive_framework.hpp  # Core skin accounting framework
+skin_gnucash_demo.cpp                # Comprehensive demonstration
+test_skin_cognitive.cpp              # Basic functionality test
+```
+
+#### 🎯 Revolutionary Applications
+
+- **Personalized Skincare**: Individual biological accounting for treatment optimization
+- **Clinical Decision Support**: Evidence-based skin health assessment using cognitive reasoning
+- **Research Analytics**: Multi-scale biological process modeling and analysis
+- **Predictive Dermatology**: Uncertain reasoning for skin condition forecasting
+
+This adaptation represents the first successful integration of cognitive accounting principles with biological modeling, creating a new paradigm for computational dermatology and personalized skincare science.
+
